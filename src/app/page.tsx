@@ -14,7 +14,7 @@ import ContactForm from "./ContactForm";
 
 export default function Home() {
   return (
-    <main className="h-screen w-full flex flex-col justify-center items-center space-y-4 bg-background">
+    <div className="h-screen w-full flex flex-col justify-center items-center background">
       {/* <ModeToggle /> */}
 
       <div className="text-center">
@@ -22,7 +22,7 @@ export default function Home() {
         <h1 className="text-3xl">I am a Full Stack Software Developer.</h1>
       </div>
 
-      <ContactForm />
-    </main>
+      {/* <ContactForm /> */}
+    </div>
   );
 }
