@@ -148,9 +148,11 @@ function ContactForm() {
                     </Button>
                   )}
 
-                  <Button className="w-full" type="submit">
-                    SUBMIT
-                  </Button>
+                  {!loading && (
+                    <Button className="w-full" type="submit">
+                      SUBMIT
+                    </Button>
+                  )}
                 </div>
               </form>
             </Form>
