@@ -1,3 +1,4 @@
+/* eslint-disable react/no-unescaped-entities */
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
@@ -20,8 +21,13 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "@/components/ui/dialog";
+import { Loader2 } from "lucide-react";
+import { useState } from "react";
+import { toast } from "sonner";
 
 function ContactForm() {
+  const [loading, setLoading] = useState<boolean>(false);
+
   const formSchema = z.object({
     name: z.string().min(2, {
       message: "Name must be at least 2 characters.",
@@ -29,7 +35,7 @@ function ContactForm() {
     email: z.string().email({
       message: "Invalid email address.",
     }),
-    message: z.string().min(10, {
+    body: z.string().min(10, {
       message: "Message must be at least 10 characters.",
     }),
   });
@@ -39,12 +45,26 @@ function ContactForm() {
     defaultValues: {
       name: "",
       email: "",
-      message: "",
+      body: "",
     },
   });
 
   async function onSubmit(values: z.infer<typeof formSchema>) {
-    console.log(values);
+    try {
+      setLoading(true);
+      await fetch("https://api.intracode.com.au/ayushlaldev/form", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(values),
+      });
+      toast("Form successfully submitted.");
+    } catch (error) {
+      toast("Error submitting form.");
+    } finally {
+      setLoading(false);
+    }
   }
 
   return (
@@ -104,13 +124,11 @@ function ContactForm() {
 
                 <FormField
                   control={form.control}
-                  name="message"
+                  name="body"
                   render={({ field }) => (
                     <FormItem>
                       <FormLabel
-                        className={
-                          form.formState.errors.message && "text-red-300"
-                        }
+                        className={form.formState.errors.body && "text-red-300"}
                       >
                         Message
                       </FormLabel>
@@ -123,6 +141,13 @@ function ContactForm() {
                 />
 
                 <div className="pt-2">
+                  {loading && (
+                    <Button className="w-full" disabled>
+                      <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+                      Please wait
+                    </Button>
+                  )}
+
                   <Button className="w-full" type="submit">
                     SUBMIT
                   </Button>
