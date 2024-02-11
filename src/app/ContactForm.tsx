@@ -6,7 +6,6 @@ import { Button } from "@/components/ui/button";
 import {
   Form,
   FormControl,
-  FormDescription,
   FormField,
   FormItem,
   FormLabel,
@@ -24,22 +23,27 @@ import {
 
 function ContactForm() {
   const formSchema = z.object({
-    username: z.string().min(2, {
-      message: "Username must be at least 2 characters.",
+    name: z.string().min(2, {
+      message: "Name must be at least 2 characters.",
+    }),
+    email: z.string().email({
+      message: "Invalid email address.",
+    }),
+    message: z.string().min(10, {
+      message: "Message must be at least 10 characters.",
     }),
   });
 
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
-      username: "",
+      name: "",
+      email: "",
+      message: "",
     },
   });
 
-  // 2. Define a submit handler.
-  function onSubmit(values: z.infer<typeof formSchema>) {
-    // Do something with the form values.
-    // ✅ This will be type-safe and validated.
+  async function onSubmit(values: z.infer<typeof formSchema>) {
     console.log(values);
   }
 
@@ -50,30 +54,79 @@ function ContactForm() {
       </DialogTrigger>
       <DialogContent>
         <DialogHeader>
-          <DialogTitle>Contact Me</DialogTitle>
-          <DialogDescription>
+          <DialogTitle>Get in touch</DialogTitle>
+          <DialogDescription className="pb-2">
+            I'll get back to you as soon as possible.
+          </DialogDescription>
+          <DialogDescription asChild>
             <Form {...form}>
               <form
                 onSubmit={form.handleSubmit(onSubmit)}
-                className="space-y-8"
+                className="space-y-4"
               >
                 <FormField
                   control={form.control}
-                  name="username"
+                  name="name"
                   render={({ field }) => (
                     <FormItem>
-                      <FormLabel>Username</FormLabel>
+                      <FormLabel
+                        className={form.formState.errors.name && "text-red-300"}
+                      >
+                        Name
+                      </FormLabel>
                       <FormControl>
                         <Input placeholder="shadcn" {...field} />
                       </FormControl>
-                      <FormDescription>
-                        This is your public display name.
-                      </FormDescription>
-                      <FormMessage />
+                      <FormMessage className="text-red-300" />
                     </FormItem>
                   )}
                 />
-                <Button type="submit">Submit</Button>
+
+                <FormField
+                  control={form.control}
+                  name="email"
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormLabel
+                        className={
+                          form.formState.errors.email && "text-red-300"
+                        }
+                      >
+                        Email
+                      </FormLabel>
+                      <FormControl>
+                        <Input placeholder="shadcn" {...field} />
+                      </FormControl>{" "}
+                      <FormMessage className="text-red-300" />
+                    </FormItem>
+                  )}
+                />
+
+                <FormField
+                  control={form.control}
+                  name="message"
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormLabel
+                        className={
+                          form.formState.errors.message && "text-red-300"
+                        }
+                      >
+                        Message
+                      </FormLabel>
+                      <FormControl>
+                        <Input placeholder="shadcn" {...field} />
+                      </FormControl>{" "}
+                      <FormMessage className="text-red-300" />
+                    </FormItem>
+                  )}
+                />
+
+                <div className="pt-2">
+                  <Button className="w-full" type="submit">
+                    SUBMIT
+                  </Button>
+                </div>
               </form>
             </Form>
           </DialogDescription>
