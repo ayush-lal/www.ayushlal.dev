@@ -46,11 +46,11 @@ function ContactForm() {
   return (
     <Dialog>
       <DialogTrigger asChild>
-        <Button>CONTACT</Button>
+        <Button className="w-full">CONTACT</Button>
       </DialogTrigger>
       <DialogContent>
         <DialogHeader>
-          <DialogTitle>Are you absolutely sure?</DialogTitle>
+          <DialogTitle>Contact Me</DialogTitle>
           <DialogDescription>
             <Form {...form}>
               <form
@@ -76,8 +76,6 @@ function ContactForm() {
                 <Button type="submit">Submit</Button>
               </form>
             </Form>
-            {/* This action cannot be undone. This will permanently delete your
-              account and remove your data from our servers. */}
           </DialogDescription>
         </DialogHeader>
       </DialogContent>
