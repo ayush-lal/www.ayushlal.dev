@@ -14,12 +14,22 @@ export default function RootLayout({
 }: {
   children: React.ReactNode;
 }) {
+  const isProd = process.env.NODE_ENV === "production";
+
   return (
     <html lang="en">
       <body className={cn("min-h-screen bg-background font-sans antialiased")}>
         <ThemeProvider attribute="class" defaultTheme="system">
           {children}
         </ThemeProvider>
+
+        {isProd && (
+          <script
+            async
+            src="https://analytics.intracode.com.au/script.js"
+            data-website-id="8bd5e72f-46e0-41c2-a105-26fec6da2021"
+          ></script>
+        )}
       </body>
     </html>
   );
