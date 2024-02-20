@@ -95,7 +95,7 @@ function ContactForm() {
                         Name
                       </FormLabel>
                       <FormControl>
-                        <Input placeholder="shadcn" {...field} />
+                        <Input placeholder="Name" {...field} />
                       </FormControl>
                       <FormMessage className="text-red-300" />
                     </FormItem>
@@ -115,7 +115,7 @@ function ContactForm() {
                         Email
                       </FormLabel>
                       <FormControl>
-                        <Input placeholder="shadcn" {...field} />
+                        <Input placeholder="Email" {...field} />
                       </FormControl>{" "}
                       <FormMessage className="text-red-300" />
                     </FormItem>
@@ -133,7 +133,7 @@ function ContactForm() {
                         Message
                       </FormLabel>
                       <FormControl>
-                        <Input placeholder="shadcn" {...field} />
+                        <Input placeholder="Body" {...field} />
                       </FormControl>{" "}
                       <FormMessage className="text-red-300" />
                     </FormItem>
