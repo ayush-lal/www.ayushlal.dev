@@ -35,7 +35,7 @@ function ContactForm() {
     email: z.string().email({
       message: "Invalid email address.",
     }),
-    body: z.string().min(10, {
+    message: z.string().min(10, {
       message: "Message must be at least 10 characters.",
     }),
   });
@@ -45,14 +45,14 @@ function ContactForm() {
     defaultValues: {
       name: "",
       email: "",
-      body: "",
+      message: "",
     },
   });
 
   async function onSubmit(values: z.infer<typeof formSchema>) {
     try {
       setLoading(true);
-      await fetch("https://api.intracode.com.au/ayushlaldev/form", {
+      await fetch("https://api.intracode.com.au/form/submit/ayushlaldev", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -124,11 +124,13 @@ function ContactForm() {
 
                 <FormField
                   control={form.control}
-                  name="body"
+                  name="message"
                   render={({ field }) => (
                     <FormItem>
                       <FormLabel
-                        className={form.formState.errors.body && "text-red-300"}
+                        className={
+                          form.formState.errors.message && "text-red-300"
+                        }
                       >
                         Message
                       </FormLabel>
